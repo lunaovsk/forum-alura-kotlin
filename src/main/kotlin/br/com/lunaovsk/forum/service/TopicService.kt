@@ -1,18 +1,21 @@
 package br.com.lunaovsk.forum.service
 
+import br.com.lunaovsk.forum.dto.request.TopicRequest
 import br.com.lunaovsk.forum.dto.view.TopicView
 import br.com.lunaovsk.forum.infra.repository.TopicsRepository
-import br.com.lunaovsk.forum.mapper.TopicsViewMapper
+import br.com.lunaovsk.forum.mapper.request.TopicRequestMapper
+import br.com.lunaovsk.forum.mapper.view.Mapper
 import br.com.lunaovsk.forum.model.topics.Topic
-import org.springframework.beans.factory.annotation.Autowired
+import br.com.lunaovsk.forum.validation.Validator
 import org.springframework.stereotype.Service
 
 @Service
-class TopicService (
+class TopicService(
 
     private val topicsRepository: TopicsRepository,
-    private val topicsViewMapper: TopicsViewMapper
-
+    private val mapperView: Mapper<Topic, TopicView>,
+    private val validator: Validator<TopicRequest>,
+    private val requestMapper: TopicRequestMapper
 
 ) {
 
@@ -27,8 +30,15 @@ class TopicService (
      * @return Uma lista contendo todas as entidades [TopicView].
      */
     fun getTopics(): List<TopicView> {
-        var list = topicsRepository.findAll();
-        return list.map { topicsViewMapper.map(it) }
+        val list = topicsRepository.findAll();
+        return list.map(mapperView::map);
+    }
+
+    fun createdTopic(topic: TopicRequest) : TopicView {
+        validator.validate(topic);
+        val topicEntity = requestMapper.map(topic);
+        val createTopic = topicsRepository.save(topicEntity);
+        return mapperView.map(createTopic);
     }
 
 }
