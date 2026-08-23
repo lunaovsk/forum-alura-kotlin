@@ -2,8 +2,8 @@ package br.com.lunaovsk.forum.controller.topics
 
 import br.com.lunaovsk.forum.dto.request.TopicRequest
 import br.com.lunaovsk.forum.dto.view.TopicView
-import br.com.lunaovsk.forum.model.topics.Topic
 import br.com.lunaovsk.forum.service.TopicService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -31,10 +31,11 @@ class TopicController (
         val list = service.getTopics();
         return ResponseEntity.ok().body(list);
     }
-//
-//    @PostMapping
-//    fun creatTopic(@RequestBody topic: TopicRequest): ResponseEntity<Topic> {
-//        var create = service.createdTopic();
-//    }
+
+    @PostMapping
+    fun creatTopic(@RequestBody topic: TopicRequest): ResponseEntity<TopicView> {
+        val create = service.createdTopic(topic);
+        return ResponseEntity.status(HttpStatus.CREATED).body(create);
+    }
 
 }
