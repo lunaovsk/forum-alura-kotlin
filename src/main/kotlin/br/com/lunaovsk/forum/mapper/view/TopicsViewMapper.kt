@@ -1,15 +1,15 @@
-package br.com.lunaovsk.forum.mapper
+package br.com.lunaovsk.forum.mapper.view
 
 import br.com.lunaovsk.forum.dto.view.AnswerView
-import br.com.lunaovsk.forum.model.topics.Topic
 import br.com.lunaovsk.forum.dto.view.TopicView
 import br.com.lunaovsk.forum.model.answer.Answer
+import br.com.lunaovsk.forum.model.topics.Topic
 import org.springframework.stereotype.Component
 
 /**
- * Componente responsável por mapear a entidade de domínio [Topic] para o DTO de saída [TopicView].
- * 
- * O uso deste Mapper é fundamental para o padrão DTO, isolando o modelo de dados real (banco) 
+ * Componente responsável por mapear a entidade de domínio [br.com.lunaovsk.forum.model.topics.Topic] para o DTO de saída [br.com.lunaovsk.forum.dto.view.TopicView].
+ *
+ * O uso deste Mapper é fundamental para o padrão DTO, isolando o modelo de dados real (banco)
  * das informações que serão efetivamente trafegadas via JSON na API REST.
  */
 @Component
@@ -19,9 +19,9 @@ class TopicsViewMapper(
 ) : Mapper<Topic, TopicView> {
     /**
      * Executa a conversão dos dados do Tópico.
-     * 
-     * Além de mapear os campos básicos (id, título, mensagem), este método itera sobre a 
-     * lista de respostas (`answer`) do tópico e delega a conversão de cada resposta 
+     *
+     * Além de mapear os campos básicos (id, título, mensagem), este método itera sobre a
+     * lista de respostas (`answer`) do tópico e delega a conversão de cada resposta
      * individualmente para o [answerMapper], mantendo o padrão DTO em toda a árvore de objetos.
      *
      * @param model A entidade [Topic] originada do banco de dados.
