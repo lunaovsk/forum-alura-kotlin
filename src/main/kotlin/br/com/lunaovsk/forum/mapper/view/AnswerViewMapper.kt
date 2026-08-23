@@ -1,4 +1,4 @@
-package br.com.lunaovsk.forum.mapper
+package br.com.lunaovsk.forum.mapper.view
 
 import br.com.lunaovsk.forum.dto.view.AnswerView
 import br.com.lunaovsk.forum.dto.view.UserView
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class AnswerViewMapper(
 
     private val userMapper: Mapper<UserData, UserView>
-    ) : Mapper<Answer, AnswerView>  {
+    ) : Mapper<Answer, AnswerView> {
 
     override fun map(model: Answer): AnswerView {
         return AnswerView(
