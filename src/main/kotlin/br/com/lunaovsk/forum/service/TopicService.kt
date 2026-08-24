@@ -7,6 +7,7 @@ import br.com.lunaovsk.forum.mapper.request.TopicRequestMapper
 import br.com.lunaovsk.forum.mapper.view.Mapper
 import br.com.lunaovsk.forum.model.topics.Topic
 import br.com.lunaovsk.forum.validation.Validator
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
@@ -32,6 +33,12 @@ class TopicService(
     fun getTopics(): List<TopicView> {
         val list = topicsRepository.findAll();
         return list.map(mapperView::map);
+    }
+
+    @Cacheable(value = ["topic"], key = "#id")
+    fun getTopic(id: Long): TopicView {
+        val topic = topicsRepository.findById(id).get();
+        return mapperView.map(topic);
     }
 
     fun createdTopic(topic: TopicRequest) : TopicView {

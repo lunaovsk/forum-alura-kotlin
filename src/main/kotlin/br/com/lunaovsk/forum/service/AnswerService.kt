@@ -8,6 +8,7 @@ import br.com.lunaovsk.forum.mapper.view.Mapper
 import br.com.lunaovsk.forum.model.answer.Answer
 import br.com.lunaovsk.forum.validation.Validator
 import jakarta.transaction.Transactional
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
 
 @Service
@@ -23,6 +24,7 @@ class AnswerService (
     }
 
     @Transactional
+    @CacheEvict(value = ["topic"], key = "#answerDTO.topicId")
     fun create(answerDTO: AnswerRequest): AnswerView {
         validator.validate(answerDTO);
         val answer = requestMapper.map(answerDTO);
