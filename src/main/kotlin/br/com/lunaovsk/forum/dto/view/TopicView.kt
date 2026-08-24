@@ -1,6 +1,7 @@
 package br.com.lunaovsk.forum.dto.view
 
 import br.com.lunaovsk.forum.model.topics.StatusTopic
+import java.io.Serializable
 import java.time.LocalDateTime
 
 data class TopicView (
@@ -11,4 +12,4 @@ data class TopicView (
     var status: StatusTopic,
     var answer: List<AnswerView>
 
-)
+)  : Serializable
