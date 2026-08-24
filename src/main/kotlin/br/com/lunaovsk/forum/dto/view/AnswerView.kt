@@ -1,5 +1,6 @@
 package br.com.lunaovsk.forum.dto.view
 
+import java.io.Serializable
 import java.time.LocalDateTime
 
 data class AnswerView(
@@ -8,4 +9,4 @@ data class AnswerView(
     val createdAt: LocalDateTime,
     val user: UserView,
     var solution: Boolean
-)
+) : Serializable
